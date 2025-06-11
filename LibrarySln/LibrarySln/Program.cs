@@ -9,97 +9,66 @@ namespace LibrarySln
     {
         static void Main(string[] args)
         {
-            
+            List<LibraryItem> items = new List<LibraryItem>();
+
             Console.WriteLine("=========== Welcome to the Archives ===========");
-            
 
-            Console.WriteLine();
-            Console.Write("Enter ID: ");
-            string id = Console.ReadLine();
-
-
-            Console.Write("Enter Title: ");
-            string title = Console.ReadLine();
-
-            Console.Write("Enter Year Published: ");
-            string yearPublished = Console.ReadLine();
-
-            LibraryItem item = null;
             while (true)
             {
+                Console.WriteLine("\nMain Menu:");
+                Console.WriteLine("1. Add new item");
+                Console.WriteLine("2. Remove item");
+                Console.WriteLine("3. Search items");
+                Console.WriteLine("4. Display all items");
+                Console.WriteLine("5. Exit");
 
-            Console.WriteLine("\nSelect the type of item: ");
-            Console.WriteLine("1. Book");
-            Console.WriteLine("2. Magazine");
-            Console.WriteLine("3. DVD");
-            
-            Console.Write("Enter your choice (1, 2, or 3): ");
-            string choice = Console.ReadLine();
-        
-            
+                Console.Write("Enter your choice: ");
+                string choice = Console.ReadLine();
+
                 switch (choice)
                 {
-
                     case "1":
-                        Console.Write("Enter Author: ");
-                        string author = Console.ReadLine();
-
-                        Console.Write("Enter Genre: ");
-                        string genre = Console.ReadLine();
-
-                        item = new Book(id, title, yearPublished, author, genre);
-                     
+                        items.Add(ItemAdder.AddItem());
                         break;
-
                     case "2":
-                        Console.Write("Enter Issue Number: ");
-                        string issueNumber = Console.ReadLine();
-
-                        Console.Write("Enter Month: ");
-                        string month = Console.ReadLine();
-
-                        item = new Magazine(id, title, yearPublished, issueNumber, month);
-                       
+                        ItemRemover.RemoveItem(items);
                         break;
-
-
                     case "3":
-                        Console.Write("Enter Duration: ");
-                        string duration = Console.ReadLine();
-
-                        Console.Write("Enter Director: ");
-                        string director = Console.ReadLine();
-
-                        item = new DVD(id, title, yearPublished, duration, director);
-                  
+                        ItemSearcher.SearchItems(items);
                         break;
-
+                    case "4":
+                        DisplayAllItems(items);
+                        break;
+                    case "5":
+                        Console.WriteLine("Exiting the program. Goodbye!");
+                        return;
                     default:
-
-                        Console.WriteLine("Wrong choice. Please try again.");
-                        continue;
-           
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
                 }
-                if (item != null)
-                {
-                    Console.WriteLine("\n=========== Item Details ===========");
-                    item.DisplayDetails();
-                    Console.WriteLine("===================================");
-                }
-
-                break;
-
-
             }
-
-            Console.WriteLine("\nPress any key to continue or type 'exit' to quit...");
-            if (Console.ReadLine().ToLower() == "exit")
-            {
-                Console.WriteLine("Exiting the program. Goodbye!");
-                return;
-            }
-
-           
         }
+
+        static void DisplayAllItems(List<LibraryItem> items)
+        {
+            Console.WriteLine("\n=========== All Items in Archive ===========");
+            if (items.Count == 0)
+            {
+                Console.WriteLine("No items in the archive yet.");
+            }
+            else
+            {
+                foreach (var item in items)
+                {
+                    item.DisplayDetails();
+                    Console.WriteLine("-----------------------------------");
+                }
+            }
+        }
+
+
+
+
     }
+    
 }
